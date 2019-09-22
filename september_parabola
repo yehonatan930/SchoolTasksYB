@@ -1,0 +1,84 @@
+# -*- coding: utf-8 -*-
+"""
+Yehonatan Tal
+"""
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def main():
+    # testing all of the functions
+    a,b,c = inputing()
+    parabola(a,b,c)
+    tenpoints = points()
+    ydistances(a,b,c,tenpoints)
+   
+    # reinputing 50 times 3 whole numbers to create a parabola from,
+    # print the parabola with thw smallest sum returned by ydistances() and the sum itself
+    m = ydistances(a,b,c,tenpoints)
+    besta = a
+    bestb = b
+    bestc = c
+    for i in range(49):
+        a,b,c = inputing()
+        d = ydistances(a,b,c,tenpoints)
+        if m > d:
+            m = d
+            besta = a
+            bestb = b
+            bestc = c
+    print("\n Best function: "+str(besta)+"X^2 + "+str(bestb)+"X + "+str(bestc)+"\n distances sum: "+str(m))
+       
+   
+def inputing():
+    # input  whole numbers and return them
+    print ("\n please enter 3 whole numbers")
+    return int(input()), int(input()), int(input())
+
+
+def parabola(a,b,c):
+    # gets three numbers and uses them to print a parabola using them as parameters
+    # boundries are from 0 to 100
+    x = np.arange(0, 100, 0.1)
+    y = a*x*x + b*x + c
+    plt.plot(x,y)
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.title("parabola")
+    plt.show()
+   
+   
+def points():
+    # input x,y values for 10 points on the graph
+    # return matrix made from the points
+    tenpoints = {'A':[],'B':[],'C':[],'D':[],'E':[],'F':[],'G':[],'H':[],'I':[],'J':[]}
+    for key in tenpoints:
+        tenpoints[key].append( int(input("x for "+key+":  ")))
+        tenpoints[key].append( int(input("y for "+key+":  ")))
+    matrix = [tenpoints[point] for point in tenpoints]
+    return matrix
+
+
+def ydistances(a,b,c,tenpoints):
+    # gets 3 whole numbers and matrix containing points
+    #return the sum of the distances of the y values of every point from the grapth maed from the numbers
+    # also print the number of points on the graph
+    s = 0
+    PoP = 0
+    for point in tenpoints:
+        x=point[0]
+        y=point[1]
+        d = np.abs(y - (a*x*x + b*x + c))
+        if d != 0:
+            s+=d
+        else:
+            PoP+=1
+           
+    print("distances sum: "+str(s))
+    print("points on the parabola: "+str(PoP))
+    return s    
+
+           
+if __name__ == "__main__":
+    main()
+
