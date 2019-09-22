@@ -1,0 +1,79 @@
+# -*- coding: utf-8 -*-
+# getting two marixes in different sizes.
+# need to sum the two using small sum and big sum,
+# small sum use cutting the matrixes to mutual size and big sum increces their size
+
+import numpy as np
+
+def main(): 
+    a1 = np.array([[1,2,3], [4,5,6], [7,8,9], [10,11,12]])
+    """
+    1 2 3
+    4 5 6
+    7 8 9
+    10 11 12
+    """
+    a2 = np.array([[1,2], [3,4], [5,6], [7,8], [9,10]])
+    """
+    1 2
+    3 4 
+    5 6
+    7 8
+    9 10
+    """
+    Small(a1, a2)
+    Big(a1,a2)
+    
+def Small (a1, a2):
+    # get two matrixes and print the small sum on them
+    b1 = a1
+    b2 = a2
+    a1_column = np.size(a1,1)
+    a1_row = np.size(a1,0)
+    a2_column = np.size(a2,1)
+    a2_row = np.size(a2,0)
+    #getting all the needed sizes
+    
+    target_column = min(a2_column, a1_column)
+    target_row = min(a2_row, a1_row)
+    #getting the smaller sizes for cutting
+    b1 = np.delete(b1, np.s_[target_row:a1_row], axis=0)
+    # cutting extra rows in b1
+    b1 = np.delete(b1, np.s_[target_column:a1_column], axis=1)
+    # cutting extra columns in b1
+    b2 = np.delete(b2, np.s_[target_row:a2_row], axis=0)
+    # cutting extra rows in b2
+    b2 = np.delete(b2, np.s_[target_column:a2_column], axis=1)
+    # cutting extra columns in b2
+        
+    sum_small = b1 + b2
+    print("sum small:")
+    print(sum_small)
+    
+
+def Big(a1, a2):
+    # get two matrixes and print the big sum on them
+    a1_column = np.size(a1,1)
+    a1_row = np.size(a1,0)
+    a2_column = np.size(a2,1)
+    a2_row = np.size(a2,0)
+    #getting all the needed sizes
+    
+    target_column = max(a2_column, a1_column)
+    target_row = max(a2_row, a1_row)
+    #getting the bigger sizes for expanding
+    
+    sum_big = np.zeros((target_row, target_column))
+    # creating a new matrix with the required value
+    
+    sum_big[:a1_row, :a1_column] += a1
+    sum_big[:a2_row, :a2_column] += a2
+    # adding the values from a1 and a2
+    print("sum big:")
+    print(sum_big)
+   
+    
+    
+    
+if __name__ == '__main__':
+    main()
